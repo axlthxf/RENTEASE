@@ -2,8 +2,8 @@
   margin: 0;
   padding: 0%;
 }
-body {
-  background:url("/image/loginpage.jpg");
+.section1 {
+  background:url("/image/background3.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-color: rgb(255, 255, 255);
@@ -13,7 +13,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  gap: 150px;
+
+}
+body img{
+  width:30% ;
 }
 
 .login {
@@ -25,17 +29,20 @@ body {
   height: 70%;
   border: 1px solid #888;
   border-radius: 10px;
-  background: rgba(131, 131, 131, 0.3);
+  background: rgba(203, 245, 255, 0.818);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(181, 181, 181, 0.1);
   backdrop-filter: blur(4.8px);
   -webkit-backdrop-filter: blur(4.8px);
   border: 1px solid rgba(54, 54, 54, 0.3);
 }
 .login img{
   width: 100px;
-  padding-bottom: 10px;
   
+}
+.login h1{
+  color: #22215B;
+  margin-bottom: 20px;
 }
 .login form {
   display: flex;
