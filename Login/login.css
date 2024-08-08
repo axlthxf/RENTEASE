@@ -17,7 +17,8 @@
 
 }
 body img{
-  width:30% ;
+  width:30%;
+  padding-bottom: 10px;
 }
 
 .login {
@@ -106,5 +107,5 @@ button:hover {
   margin-top: 10px;
 }
 .login a:hover {
-  color: white;
+  color: rgb(255, 0, 0);
 }
