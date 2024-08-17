@@ -78,7 +78,7 @@
   .section1{
       width: 100%;
       height: 615px;
-      background-image: url("/image/user3.jpg");
+      background-image: url("./image/user3.jpg");
       background-size: cover;
       background-repeat: no-repeat;
       position: relative;

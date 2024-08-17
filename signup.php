@@ -32,6 +32,13 @@
             <div class="form">
               <input type="email" name="email" placeholder="Email" required />
             </div>
+            <div class="selection">
+            <select name="selectuser" id="">
+              <option value="" disabled selected required>Select User Type</option>
+              <option value="User">User</option>
+              <option value="Owner">Owner</option>
+            </select>
+            </div>
             <div class="form">
               <input
                 type="password"
@@ -69,18 +76,28 @@
       $email = $_POST['email'];
       $password = $_POST['password'];
       $confirm_password = $_POST['confirm_password'];
+      $usertype = $_POST['selectuser'];
+      if($usertype == 'User'){
+        $type=0;
+      }
+      else{
+        $type=1;
+      }
+
       
       if($password == $confirm_password)
       {
-        $query = "INSERT INTO user (name, phno, email, password) VALUES ('$fullname', '$phonenumber', '$email', '$password')";
-        $query1 = "INSERT INTO `login`(`email`, `password`, `user_type`) VALUES ('$email', '$password','0')";
+        $query = "INSERT INTO user (name, phno, email, password,usertype) VALUES ('$fullname', '$phonenumber', '$email', '$password', '$usertype')";
+        $query1 = "INSERT INTO `login`(`email`, `password`, `user_type`) VALUES ('$email', '$password','$type' )";
         mysqli_query($dbconnect, $query);
         mysqli_query($dbconnect, $query1);
+        // header('Location: login.php');
         echo "Registration Successful!";
       }
       else
       {
         echo "Passwords do not match!";
       }
+     
     }
     ?>
