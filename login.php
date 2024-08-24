@@ -50,15 +50,22 @@
     $result = mysqli_query($dbconnect, $query);
     if($result){
     $row=mysqli_num_rows($result);
-    if ($row > 0)
+    if ($row['user_type']==0)
     {
-      header('Location: home.html');  // Redirect to home page after successful login
+      header('Location: user.html');  
       exit();
     }
-    else
+    else if($row['user_type']==1)
     {
-      echo "<script>alert('Invalid username or password')</script>";
+      header('Location: owner.html');  
+      exit();
     }
+    else{
+      header('Location: admin.html'); 
+    }
+  }
+  else{
+    echo "<script>alert('Invalid username or password')</script>";
   }
   }
 ?>

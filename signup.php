@@ -89,7 +89,7 @@
       {
         $query = "INSERT INTO user (name, phno, email, password,usertype) VALUES ('$fullname', '$phonenumber', '$email', '$password', '$usertype')";
         $query1 = "INSERT INTO `login`(`email`, `password`, `user_type`) VALUES ('$email', '$password','$type' )";
-        mysqli_query($dbconnect, $query);
+       $data= mysqli_query($dbconnect, $query);
         mysqli_query($dbconnect, $query1);
         // header('Location: login.php');
         echo "Registration Successful!";
@@ -97,6 +97,10 @@
       else
       {
         echo "Passwords do not match!";
+      }
+      if($data)
+      {
+        echo "<script>alert('data inserted successfully')</script>";
       }
      
     }
