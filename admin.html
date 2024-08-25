@@ -1,32 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="admin.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Admin Dashboard</title>
   </head>
   <body>
-    <nav>
-        <div class="navbar">
-        <div class="logo">
-          <a href="home.html">  <img src="./image/renteaselogo21.png" alt="Logo" /></a>
+    <div class="header">
+      <h1>Admin Dashboard</h1>
+    </div>
+    <div class="menu">
+      <div class="logo"></div>
+      <div class="sidebar">
+        <div class="options">
+          <a href="#properties">Manage Properties</a>
         </div>
-      <div class="options">
-        <ul>
-          <li><a href="#">Home</a></li>
-        </ul>
-        <div class="logout">
-            <button ">Logout</button>
-          </div>
+        <div class="options">
+          <a href="#landlords">Manage Landlords</a>
+        </div>
+        <div class="options">
+          <a href="#tenants">Manage Tenants</a>
+        </div>
+        <div class="options">
+          <a href="#settings">Settings</a>
+        </div>
       </div>
+      <div class="options">
+      <a href="#logout">Logout</a>
     </div>
-    </nav>
-    <div class="section1">
-        <div class="content">
-        <h1>Welcome to</h1>
-        <h2>Admin Dashboard</h2>
-    </div>
+  </div>
+
+    <div class="content">
+      <!-- Dashboard Overview -->
+      <div class="overview">
+        <div>
+          <h3>Total Properties</h3>
+          <p>50</p>
+        </div>
+        <div>
+          <h3>Total Landlords</h3>
+          <p>20</p>
+        </div>
+        <div>
+          <h3>Total Tenants</h3>
+          <p>100</p>
+        </div>
+        <div>
+          <h3>Pending Requests</h3>
+          <p>5</p>
+        </div>
+      </div>
+
+      <!-- <div class="card">
+            <h3>Manage Properties</h3>
+            <p>View and manage all properties listed on the platform.</p>
+        </div>
+        <div class="card">
+            <h3>Manage Landlords</h3>
+            <p>View and manage landlord details.</p>
+        </div>
+        <div class="card">
+            <h3>Manage Tenants</h3>
+            <p>View and manage tenant details.</p>
+        </div>
+        <div class="card">
+            <h3>Requests & Approvals</h3>
+            <p>Manage rental requests and approve or deny applications.</p>
+        </div> -->
     </div>
   </body>
 </html>
