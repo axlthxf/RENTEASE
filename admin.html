@@ -12,7 +12,7 @@
     </div>
     <div class="menu">
       <div class="logo">
-       <a href="home.html"> <img src="./image/renteaselogo21.png" alt=""></a>
+       <a href="home.html"> <img src="./image/renteaseadmin-removebg-preview1.png" alt=""></a>
         <!-- <hr> -->
       </div>
       <div class="sidebar">
@@ -25,7 +25,7 @@
         </div>
         <div class="options">
   
-          <a href="Tenant.html">Manage Tenants</a>
+          <a href="Tenant.php" onclick="showSection('manageTenants')">Manage Tenants</a>
         </div>
         <div class="options">
 
@@ -38,22 +38,34 @@
     <div class="content">
       <!-- Dashboard Overview -->
       <div class="overview">
-        <div>
+        <div class="card">
+          <img src="./image/house.png" alt="">
+          <div class="contents">
           <h3>Total Properties</h3>
           <p>50</p>
         </div>
-        <div>
+        </div>
+        <div class="card">
+          <img src="./image/boss.png" alt="">
+          <div class="contents">
           <h3>Total Landlords</h3>
           <p>20</p>
         </div>
-        <div>
+        </div>
+        <div class="card">
+          <img src="./image/tenant.png" alt="">
+          <div class="contents">
           <h3>Total Tenants</h3>
           <p>100</p>
         </div>
-        <div>
+        </div>
+        <!-- <div class="card">
+          <img src="./image/house.png" alt="">
+          <div class="contents">
           <h3>Pending Requests</h3>
           <p>5</p>
         </div>
+        </div> -->
       </div>
 
       <!-- <div class="card">
@@ -73,20 +85,19 @@
             <p>Manage rental requests and approve or deny applications.</p>
         </div> -->
     </div>
-
-    <!-- <script>
+ <script>
       function showSection(sectionId) {
-          // Hide all sections
+     
           var sections = document.querySelectorAll('.section');
           sections.forEach(function(section) {
               section.classList.remove('active');
           });
 
           // Show the selected section
-          var selectedSection = document.getElementById(sectionId);
+          var selectedSection = document.getElementById('manageTenants');
           selectedSection.classList.add('active');
-      }
-  </script> -->
+      } 
+  </script>
  
   </body>
 </html>
