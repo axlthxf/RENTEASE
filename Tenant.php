@@ -52,79 +52,25 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <!-- <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>johndoe@example.com</td>
-                    <td>123-456-7890</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-block">Block</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jane Smith</td>
-                    <td>janesmith@example.com</td>
-                    <td>098-765-4321</td>
-                    <td>Blocked</td>
-                    <td>
-                        <button class="btn btn-unblock">Unblock</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Michael Johnson</td>
-                    <td>michaeljohnson@example.com</td>
-                    <td>456-789-0123</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-block">Block</button>
-                    </td>
-                </tr>
-            </tbody> -->
+          
 
-    <!-- <?php
-    // $dbconnect=mysqli_connect("localhost","root","","rentease");
-    // if(!$dbconnect){
-    //     die("Connection failed: ". mysqli_connect_error());
-    // }
-
-    // $sql="SELECT * FROM `user` WHERE 'usertype' = 'User'";
-    // $result = mysqli_query($dbconnect, $sql);
-
-    // if (mysqli_num_rows($result) > 0) {
-    //   while($row = mysqli_fetch_assoc($result)) {
-    //     echo "<tr>";
-    //     echo "<td>" . $row["user_id"] . "</td>";
-    //     echo "<td>" . $row["name"] . "</td>";
-    //     echo "<td>" . $row["email"] . "</td>";
-    //     echo "<td>" . $row["phno"] . "</td>";
-    //     echo "<td>" . $row["status"] . "</td>";
-    //     echo "<td><div class='action-buttons'>";
-    //   }
-    //   mysqli_close($dbconnect);
-    // }
-
-    ?> -->
     <tbody>
          <?php
-                    // Connect to the database
+                    
                     $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 
-                    // Check connection
+                   
                     if (!$dbconnect) {
                         die("Connection failed: " . mysqli_connect_error());
                     }
 
-                    // Fetch tenant details
+                   
                     $sql = "SELECT * FROM `user` WHERE `usertype` = 'User'";
                     $result = mysqli_query($dbconnect, $sql);
 
-                    // Check if there are results
+                    
                     if (mysqli_num_rows($result) > 0) {
-                        // Loop through each row and output it in the table
+                
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                             echo "<td>" . $row["user_id"] . "</td>";
