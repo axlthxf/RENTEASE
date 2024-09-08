@@ -41,31 +41,51 @@
   </body>
 </html>
 <?php
-    $dbconnect=mysqli_connect("localhost","root","","rentease");
-    if(isset($_POST['submit']))
-  {
+$dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+
+if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $query = "SELECT * FROM `login` WHERE `email`='$username' AND `password`='$password'";
+    
+    $query = "SELECT * FROM `login` WHERE `email`='$username'";
     $result = mysqli_query($dbconnect, $query);
-    if($result){
-    $row=mysqli_num_rows($result);
-    if ($row['user_type']==0)
-    {
-      header('Location: user.html');  
-      exit();
+    
+    $query1 = "SELECT * FROM `user` WHERE `email`='$username'";
+    $result1 = mysqli_query($dbconnect, $query1);
+    
+    if ($result && $result1) {
+        if (mysqli_num_rows($result) > 0 && mysqli_num_rows($result1) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $row1 = mysqli_fetch_assoc($result1);
+            echo "<script>console.log('User Status: " . $row1['status'] . "');</script>";
+            if ($row1['status'] === 'active') {
+                
+                if ($row['password'] == $password) {
+                    
+                    if ($row['user_type'] == 0) {
+                        header('Location: user.html');  
+                        exit();
+                    } else if ($row['user_type'] == 1) {
+                        header('Location: owner.html');  
+                        exit();
+                    } else {
+                        header('Location: admin.html');  
+                        exit();
+                    }
+                    
+                } else {
+                    echo "<script>alert('Invalid username or password');</script>";
+                }
+                
+            } else {
+                echo "<script>alert('User is not active');</script>";
+            }
+            
+        } else {
+            echo "<script>alert('Invalid username or password');</script>";
+        }
+    } else {
+        echo "<script>alert('Error in query execution');</script>";
     }
-    else if($row['user_type']==1)
-    {
-      header('Location: owner.html');  
-      exit();
-    }
-    else{
-      header('Location: admin.html'); 
-    }
-  }
-  else{
-    echo "<script>alert('Invalid username or password')</script>";
-  }
-  }
+}
 ?>

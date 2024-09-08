@@ -49,6 +49,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <!-- <th>Status</th> -->
                     <th>Action</th>
                 </tr>
             </thead>
@@ -72,21 +73,26 @@
                     if (mysqli_num_rows($result) > 0) {
                 
                         while ($row = mysqli_fetch_assoc($result)) {
+                          $id= $row["user_id"];
                             echo "<tr>";
                             echo "<td>" . $row["user_id"] . "</td>";
                             echo "<td>" . $row["name"] . "</td>";
                             echo "<td>" . $row["email"] . "</td>";
                             echo "<td>" . $row["phno"] . "</td>";
+                            // echo "<td>" . $row["status"] . "</td>";
                             echo "<td>";
-                            echo "<button class='btn btn-block'>Block</button>";
+                            // echo "<button class='btn btn-block'>Block</button>";
                             // status
-                          //   if ($row["status"] == "Active") {
-                          //     echo "<button class='block-btn'>Block</button>";
-                          // } else {
-                          //     echo "<button class='unblock-btn'>Unblock</button>";
-                          // }
-                          // echo "</div></td>";
-                          // echo "</tr>";
+                            if ($row["status"] == "active") {
+                              echo "<form method='post'><button name='blockuser' value={$id} type='submit' class='btn btn-block'>Block</button></form>";
+                              // echo "<button class='btn btn-block'>Edit</button>";
+                          } else {
+                            echo "<form method='post'><button name='unblockuser' value={$id} type='submit' class='btn btn-unblock'>Unblock</button></form>";
+                            // echo "<button class='btn btn-unblock'>Edit</button>";
+                              
+                          }
+                          echo "</div></td>";
+                          echo "</tr>";
                       }
                             echo "</td>";
                             echo "</tr>";
@@ -94,6 +100,32 @@
                     else {
                         echo "<tr><td colspan='6'>No tenants found</td></tr>";
                     }
+                    if(isset($_POST['blockuser']))
+                    {
+                      $user_id=$_POST['blockuser'];
+                     $sql1= "UPDATE `user` SET `status` = 'inactive' WHERE `user_id` = $user_id ";
+                     $result1= mysqli_query($dbconnect, $sql1); 
+                     if (mysqli_query($dbconnect, $sql1)) {
+                       echo "Status updated successfully";
+                       header("Location: Tenant.php");
+                   } else {
+                       echo "Error updating status: " . mysqli_error($dbconnect);
+                   }
+                 }
+                 if(isset($_POST['unblockuser']))
+                    {
+                      $user_id=$_POST['unblockuser'];
+                     $sql1= "UPDATE `user` SET `status` = 'active' WHERE `user_id` = $user_id ";
+                     $result1= mysqli_query($dbconnect, $sql1); 
+                     if (mysqli_query($dbconnect, $sql1)) {
+                       echo "Status updated successfully";
+                       header("Location: Tenant.php");
+                   } else {
+                       echo "Error updating status: " . mysqli_error($dbconnect);
+                   }
+                 }
+                    
+                          
 
                     // Close the database connection
                     mysqli_close($dbconnect);
