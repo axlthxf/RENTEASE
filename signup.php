@@ -91,11 +91,10 @@
       {
         $query = "INSERT INTO user (name, phno, email, password,status,usertype) VALUES ('$fullname', '$phonenumber', '$email', '$password','$status', '$usertype')";
         $query1 = "INSERT INTO `login`(`email`, `password`, `user_type`) VALUES ('$email', '$password','$type' )";
-       $data= mysqli_query($dbconnect, $query);
-        mysqli_query($dbconnect, $query1);
-        // header('Location: login.php');
-        echo "Registration Successful!";
-        
+        $data= mysqli_query($dbconnect, $query);
+         mysqli_query($dbconnect, $query1);
+         echo "Registration Successful!";  
+         header('Location: login.php');
       }
       else
       {

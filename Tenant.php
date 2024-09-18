@@ -21,11 +21,11 @@
             <a href="#properties">Manage Properties</a>
           </div>
           <div class="options">
-            <a href="#landlords">Manage Landlords</a>
+            <a href="Manageowner.php">Manage Landlords</a>
           </div>
           <div class="options">
     
-            <a href="Tenant.html">Manage Tenants</a>
+            <a href="Tenant.php">Manage Tenants</a>
           </div>
           <div class="options">
   
@@ -79,16 +79,15 @@
                             echo "<td>" . $row["name"] . "</td>";
                             echo "<td>" . $row["email"] . "</td>";
                             echo "<td>" . $row["phno"] . "</td>";
-                            // echo "<td>" . $row["status"] . "</td>";
+                            
                             echo "<td>";
-                            // echo "<button class='btn btn-block'>Block</button>";
-                            // status
+                          
                             if ($row["status"] == "active") {
                               echo "<form method='post'><button name='blockuser' value={$id} type='submit' class='btn btn-block'>Block</button></form>";
-                              // echo "<button class='btn btn-block'>Edit</button>";
+                              
                           } else {
                             echo "<form method='post'><button name='unblockuser' value={$id} type='submit' class='btn btn-unblock'>Unblock</button></form>";
-                            // echo "<button class='btn btn-unblock'>Edit</button>";
+                          
                               
                           }
                           echo "</div></td>";

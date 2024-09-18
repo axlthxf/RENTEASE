@@ -70,8 +70,8 @@
 
                     
                     if (mysqli_num_rows($result) > 0) {
-                
-                        while ($row = mysqli_fetch_assoc($result)) {
+                      while ($row = mysqli_fetch_assoc($result)) {
+                          $id= $row["user_id"];
                             echo "<tr>";
                             echo "<td>" . $row["user_id"] . "</td>";
                             echo "<td>" . $row["name"] . "</td>";
@@ -79,12 +79,10 @@
                             echo "<td>" . $row["phno"] . "</td>";
                            
                             echo "<td>";
-                            // echo "<button class='btn btn-block'>Block</button>";
-                            // status
                             if ($row["status"] == "active") {
-                              echo "<button class='btn btn-block'>Block</button>";
+                              echo "<form method='post'><button name='blockuser' value={$id} type='submit' class='btn btn-block'>Block</button></form>";
                           } else {
-                              echo "<button class='btn btn-unblock'>Unblock</button>";
+                            echo "<form method='post'><button name='unblockuser' value={$id} type='submit' class='btn btn-unblock'>Unblock</button></form>";
                           }
                           echo "</div></td>";
                           echo "</tr>";
@@ -93,8 +91,33 @@
                             echo "</tr>";
                         }
                     else {
-                        echo "<tr><td colspan='6'>No tenants found</td></tr>";
+                        echo "<tr><td colspan='6'>No owners found</td></tr>";
                     }
+                    if(isset($_POST['blockuser']))
+                    {
+                      $user_id=$_POST['blockuser'];
+                     $sql1= "UPDATE `user` SET `status` = 'inactive' WHERE `user_id` = $user_id ";
+                     $result1= mysqli_query($dbconnect, $sql1); 
+                     if (mysqli_query($dbconnect, $sql1)) {
+                       echo "Status updated successfully";
+                       header("Location: Manageowner.php");
+                   } else {
+                       echo "Error updating status: " . mysqli_error($dbconnect);
+                   }
+                 }
+                 if(isset($_POST['unblockuser']))
+                    {
+                      $user_id=$_POST['unblockuser'];
+                     $sql1= "UPDATE `user` SET `status` = 'active' WHERE `user_id` = $user_id ";
+                     $result1= mysqli_query($dbconnect, $sql1); 
+                     if (mysqli_query($dbconnect, $sql1)) {
+                       echo "Status updated successfully";
+                       header("Location: Manageowner.php");
+                   } else {
+                       echo "Error updating status: " . mysqli_error($dbconnect);
+                   }
+                 }
+                    
 
                     // Close the database connection
                     mysqli_close($dbconnect);
