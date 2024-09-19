@@ -9,7 +9,7 @@
   <body>
     <div class="section2">
       <div class="signup">
-        <img src="./image/renteaselogo21.png" alt="">
+       <a href="home.html"> <img src="./image/renteaselogo21.png" alt=""></a>
         <h1>Sign up</h1>
         <div class="section">
           <form action="" method="post">

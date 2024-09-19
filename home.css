@@ -121,7 +121,7 @@ nav .options li a:hover {
 .about-section {
   text-align: center;
   padding: 50px;
-  background: linear-gradient(135deg, #8BC6EC, #9599E2);
+  background: linear-gradient(135deg, #eaeaeabf, #6aa1ba);
   color: #333;
   border: none;
 
@@ -144,14 +144,14 @@ nav .options li a:hover {
 .service-area {
   margin-top: 30px;
   font-size: 1.2rem;
-  color: #ffffff;
+  color: #267edd;
 }
 
 
       .why-list-with-us {
           text-align: center;
           padding: 60px 20px;
-          background: linear-gradient(135deg, #8BC6EC, #9599E2);
+          background: linear-gradient(135deg, #eaeaeabf, #6aa1ba);
       }
 
       .why-list-with-us h2 {
@@ -161,7 +161,7 @@ nav .options li a:hover {
       }
 
       .why-list-with-us p {
-          color: #ffffff;
+        color: #376eaa;
           font-size: 1.2rem;
           margin-bottom: 40px;
       }
