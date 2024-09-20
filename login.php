@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
                 }
                 
             } else {
-                echo "<script>alert('User is not active');</script>";
+                echo "<script>alert('User is blocked');</script>";
             }
             
         } else {
