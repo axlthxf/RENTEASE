@@ -1,3 +1,16 @@
+<?php
+  if($_SERVER["REQUEST_METHOD"] == "GET"){
+    $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+    
+ 
+    if (!$dbconnect) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $id=$_GET['id'];
+    
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -83,10 +96,12 @@
             
             <label for="price">Price:</label>
             <input type="number" id="price" name="price" required>
-            
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
-            
+            <label for="price">Bedroom:</label>
+            <input type="number" id="bedroom" name="bedroom" required>
+            <label for="price">Bathroom:</label>
+            <input type="number" id="bathroom" name="bathroom" required>
+            <label for="price">Square Feet:</label>
+            <input type="number" id="sqft" name="sqft" required>
             <!-- Image Upload -->
             <label for="property-image">Upload Image:</label>
             <input type="file" id="property-image" name="property_image" accept="image/*" required>

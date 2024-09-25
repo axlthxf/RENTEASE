@@ -23,7 +23,7 @@
             </div>
             <div class="form">
               <input
-                type="text"
+                type="number"
                 name="phonenumber"
                 placeholder="phonenumber"
                 required

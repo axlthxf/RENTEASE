@@ -66,10 +66,10 @@ if (isset($_POST['submit'])) {
                         header('Location: user.html');  
                         exit();
                     } else if ($row['user_type'] == 1) {
-                        header('Location: owner.html');  
+                        header("Location: owner.php?id=".$row1['user_id']."");  
                         exit();
                     } else {
-                        header('Location: admin.html');  
+                        header('Location: admin.php');  
                         exit();
                     }
                     
