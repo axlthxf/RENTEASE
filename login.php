@@ -57,6 +57,7 @@ if (isset($_POST['submit'])) {
         if (mysqli_num_rows($result) > 0 && mysqli_num_rows($result1) > 0) {
             $row = mysqli_fetch_assoc($result);
             $row1 = mysqli_fetch_assoc($result1);
+            
             echo "<script>console.log('User Status: " . $row1['status'] . "');</script>";
             if ($row1['status'] === 'active') {
                 
