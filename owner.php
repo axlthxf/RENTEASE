@@ -1,13 +1,17 @@
 <?php
-error_reporting(0);
-  if($_SERVER["REQUEST_METHOD"] == "GET"){
-    $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+// error_reporting(0);
+$dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+if($_SERVER["REQUEST_METHOD"] == "GET"){
+  $id=$_GET['id'];
+}
+  // if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
     
  
-    if (!$dbconnect) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $id=$_GET['id'];
+    // if (!$dbconnect) {
+    //     die("Connection failed: " . mysqli_connect_error());
+    // }
+    
     if(isset($_POST['submit']))
     {
       $propertyname = $_POST['property_name'];
@@ -18,26 +22,26 @@ error_reporting(0);
       $bathroom = $_POST['bathroom'];
       $sqft= $_POST['sqft'];
       $property_image= $_POST['property_image'];
-  }
-  $query = "SELECT * FROM properties WHERE property_number = $property_number";
-  $result = mysqli_query($dbconnect, $query);
+  
+//   $query = "SELECT * FROM property WHERE property_number = '$property_number'";
+//   $result = mysqli_query($dbconnect, $query);
 
-  if (mysqli_num_rows($result) > 0) {
-    echo "<script>alert('A property with this number already exists.)</script>";
-} 
-else{
-      $property_number = $_POST['property_number'];
-  $query1 = "INSERT INTO properties ( property_name, location,property_number, price, bedroom, bathroom, sqft, property_image)
-  VALUES ( '$propertyname', '$location', '$property_number','$price', '$bedroom', '$bathroom', '$sqft', '$property_image')";
-              if (mysqli_query($dbconnect, $insert_query)) {
+//   if (mysqli_num_rows($result) > 0) {
+//     echo "<script>alert('A property with this number already exists.)</script>";
+// } 
+// else{
+      //$property_number = $_POST['property_number'];
+      $query1 = "INSERT INTO property ( property_name,user_id , location,property_number, price, Bed, Bathroom, sqft, image,status)
+  VALUES ( '$propertyname', '$id','$location', '$property_number','$price', '$bedroom', '$bathroom', '$sqft', '$property_image','vacant')";
+              if (mysqli_query($dbconnect, $query1)) {
                 echo "<script>alert('Property inserted successfully.)</script>";
             } else {
                 echo "<script>alert('error inserting property)</script>";
                  mysqli_error($dbconnect);
             }
-}
-mysqli_close($dbconnect);
-}
+// }
+//mysqli_close($dbconnect);
+ }
 ?>
 
 <!DOCTYPE html>
@@ -116,7 +120,7 @@ mysqli_close($dbconnect);
       <!-- Add New Property Section -->
       <section id="add-property-section" class="add-property-section">
         <h2>Add New Property</h2>
-        <form action="add_property.php" method="POST" enctype="multipart/form-data" class="property-form">
+        <form action="" method="post" enctype="multipart/form-data" class="property-form">
             <label for="property-name">Property Name:</label>
             <input type="text" id="property-name" name="property_name" required>
             <label for="property-number">Property Number:</label>
@@ -129,13 +133,13 @@ mysqli_close($dbconnect);
             <input type="number" id="price" name="price" required>
             <label for="price">Bedroom:</label>
             <input type="number" id="bedroom" name="bedroom" required>
-            <label for="price">Bathroom:    $location = $_POST['location'];</label>
+            <label for="price">Bathroom: </label>
             <input type="number" id="bathroom" name="bathroom" required>
             <label for="price">Square Feet:</label>
             <input type="number" id="sqft" name="sqft" required>
             <!-- Image Upload -->
             <label for="property-image">Upload Image:</label>
-            <input type="file" id="property-image" name="property_image" accept="image/*" required>
+            <input type="file" id="property-image" name="property_image" accept="image/*" >
             
             <button type="submit" name="submit">List Property</button>
         </form>
