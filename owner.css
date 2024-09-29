@@ -197,3 +197,26 @@ th, td {
 button {
   padding: 10px 20px;
 }
+.btn {
+  padding: 8px 16px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease; 
+}
+
+
+.btn-block {
+  background-color: #e74c3c;
+}
+
+.btn-unblock {
+  background-color: #27ae60;
+}
+
+
+.btn:hover {
+  opacity: 0.8;
+  background-color: #ca0000;
+}

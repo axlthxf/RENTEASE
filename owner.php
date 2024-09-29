@@ -1,47 +1,49 @@
 <?php
-// error_reporting(0);
+session_start();
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
-if($_SERVER["REQUEST_METHOD"] == "GET"){
-  $id=$_GET['id'];
+if (isset($_SESSION['user'])) {
+  $user_id = $_SESSION['user']; // Assuming 'user' is where you store user_id in session
+} else {
+  header("Location: login.php");
+  exit();
 }
-  // if($_SERVER["REQUEST_METHOD"] == "POST"){
-    
-    
- 
-    // if (!$dbconnect) {
-    //     die("Connection failed: " . mysqli_connect_error());
-    // }
-    
-    if(isset($_POST['submit']))
-    {
-      $propertyname = $_POST['property_name'];
-      $location = $_POST['location'];
-      $property_number = $_POST['property_number'];
-      $price = $_POST['price'];
-      $bedroom = $_POST['bedroom'];
-      $bathroom = $_POST['bathroom'];
-      $sqft= $_POST['sqft'];
-      $property_image= $_POST['property_image'];
-  
-//   $query = "SELECT * FROM property WHERE property_number = '$property_number'";
-//   $result = mysqli_query($dbconnect, $query);
 
-//   if (mysqli_num_rows($result) > 0) {
-//     echo "<script>alert('A property with this number already exists.)</script>";
-// } 
-// else{
-      //$property_number = $_POST['property_number'];
-      $query1 = "INSERT INTO property ( property_name,user_id , location,property_number, price, Bed, Bathroom, sqft, image,status)
-  VALUES ( '$propertyname', '$id','$location', '$property_number','$price', '$bedroom', '$bathroom', '$sqft', '$property_image','vacant')";
-              if (mysqli_query($dbconnect, $query1)) {
-                echo "<script>alert('Property inserted successfully.)</script>";
-            } else {
-                echo "<script>alert('error inserting property)</script>";
-                 mysqli_error($dbconnect);
-            }
-// }
-//mysqli_close($dbconnect);
- }
+if (isset($_POST['submit'])) {
+  $property_name = $_POST['property_name'];
+  $property_number = $_POST['property_number'];
+  $location = $_POST['location'];
+  $price = $_POST['price'];
+  $bedroom = $_POST['bedroom'];
+  $bathroom = $_POST['bathroom'];
+  $sqft = $_POST['sqft'];
+  $property_image = $_FILES['property_image']['name'];
+
+  // Check if the property number already exists
+  $check_property_query = "SELECT * FROM `property` WHERE `property_number` = '$property_number'";
+  $result = mysqli_query($dbconnect, $check_property_query);
+
+  if (mysqli_num_rows($result) > 0) {
+      echo "<script>alert('A property with this number already exists! Please use a unique property number.');</script>";
+  } else {
+      // Upload the image to the server
+      $target_dir = "image/";
+      $target_file = $target_dir . basename($_FILES["property_image"]["name"]);
+
+      if (move_uploaded_file($_FILES["property_image"]["tmp_name"], $target_file)) {
+          // Insert the property into the database
+          $insert_query = "INSERT INTO `property` (`user_id`, `property_name`, `property_number`, `location`, `price`, `bedroom`, `bathroom`, `sqft`, `image`, `status`) 
+                           VALUES ('$user_id', '$property_name', '$property_number', '$location', '$price', '$bedroom', '$bathroom', '$sqft', '$property_image', 'vaccant')";
+
+          if (mysqli_query($dbconnect, $insert_query)) {
+              echo "<script>alert('Property listed successfully!');</script>";
+          } else {
+              echo "<script>alert('Error while listing the property.');</script>";
+          }
+      } else {
+          echo "<script>alert('Failed to upload the image.');</script>";
+      }
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -104,15 +106,76 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         <table>
           <thead>
             <tr>
-              <th>Property ID</th>
-              <th>Property Name</th>
+              <th>Pid</th>
+              <th>name</th>
+              <th>property number</th>
               <th>Location</th>
               <th>Price</th>
+              <th>bedroom</th>
+              <th>bathroom</th>
+              <th>sqft</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody id="properties-list">
             <!-- Properties fetched from the database will be displayed here -->
+             <?php
+               $sql = "SELECT * FROM `property` where `user_id`= '$user_id'";
+               $result = mysqli_query($dbconnect, $sql);
+
+               
+               if (mysqli_num_rows($result) > 0) {
+                 while ($row = mysqli_fetch_assoc($result)) {
+                  $id= $row["property_id"];
+                       echo "<tr>";
+                       echo "<td>" . $row["property_id"] . "</td>";
+                       echo "<td>" . $row["property_name"] . "</td>";
+                       echo "<td>" . $row["property_number"] . "</td>";
+                       echo "<td>" . $row["location"] . "</td>";
+                       echo "<td>" . $row["price"] . "</td>";
+                       echo "<td>" . $row["bedroom"] . "</td>";
+                       echo "<td>" . $row["bathroom"] . "</td>";
+                       echo "<td>" . $row["sqft"] . "</td>";
+                      
+                       echo "<td>";
+                       if ($row["status"] == "vacant") {
+                        echo "<form method='post'><button name='blockuser' value={$id} type='submit' class='btn btn-block'>occupied</button></form>";
+                    } else {
+                      echo "<form method='post'><button name='unblockuser' value={$id} type='submit' class='btn btn-unblock'>vacant</button></form>";
+                    }
+                 }
+                       echo "</td>";
+                       echo "</tr>";
+                }
+                       else {
+                        echo "<tr><td colspan='6'>No owners found</td></tr>";
+                    }
+                    if(isset($_POST['blockuser'])) {
+  $property_id=$_POST['blockuser'];
+  $sql1="UPDATE `property` SET `status` = 'vacant' WHERE `property_id` = $property_id";
+  $result1= mysqli_query($dbconnect, $sql1); 
+  if (mysqli_query($dbconnect, $sql1)) {
+    echo "Status updated successfully";
+    header("Location:owner.php");
+  } else {
+    echo "Error updating status: " . mysqli_error($dbconnect);
+  }
+}
+
+if(isset($_POST['unblockuser'])) {
+  $property_id=$_POST['unblockuser']; // Ensure this is the same variable name for both
+  $sql2="UPDATE `property` SET `status` = 'occupied' WHERE `property_id` = $property_id"; // Fix query
+  $result2= mysqli_query($dbconnect, $sql2); 
+  if (mysqli_query($dbconnect, $sql2)) {
+    echo "Status updated successfully";
+    header("Location: owner.php");
+  } else {
+    echo "Error updating status: " . mysqli_error($dbconnect);
+  }
+}
+
+                  
+             ?>
           </tbody>
         </table>
       </section>

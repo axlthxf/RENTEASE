@@ -41,6 +41,7 @@
   </body>
 </html>
 <?php
+session_start();
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 
 if (isset($_POST['submit'])) {
@@ -64,10 +65,11 @@ if (isset($_POST['submit'])) {
                 if ($row['password'] == $password) {
                     
                     if ($row['user_type'] == 0) {
-                        header('Location: user.html');  
-                        exit();
+                      header('Location: user.html');  
+                      exit();
                     } else if ($row['user_type'] == 1) {
-                        header("Location: owner.php?id=".$row1['user_id']."");  
+                      $_SESSION['user'] =$row1['user_id'];
+                        header("Location: owner.php");  
                         exit();
                     } else {
                         header('Location: admin.php');  
