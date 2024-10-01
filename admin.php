@@ -13,26 +13,24 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                     
                       if ($result) {
                        $total_landlords = mysqli_num_rows($result);
-                        // $row = mysqli_fetch_assoc($result);
-                        // $total_landlords = $row['total']; 
+
                         
                     }
-
-  
-                      // $sql1 ="SELECT COUNT(*) AS total_tenants  FROM user WHERE usertype = 'User'";
-                      // $result1 = mysqli_query($dbconnect, $sql1);
-                      // $row1 = mysqli_fetch_assoc($result1);
-                      // $total_tenants = $row1['total_tenants'];
-
                       $sql ="SELECT * FROM user WHERE usertype='User'";
                       $result = mysqli_query($dbconnect, $sql);
                     
                     
                       if ($result) {
                        $total_tenants = mysqli_num_rows($result);
-                        // $row = mysqli_fetch_assoc($result);
-                        // $total_landlords = $row['total']; 
-                        
+
+                    }
+                      $sql ="SELECT * FROM property";
+                      $result = mysqli_query($dbconnect, $sql);
+                    
+                    
+                      if ($result) {
+                       $total_property = mysqli_num_rows($result);
+
                     }
 }
                       
@@ -89,7 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           <img src="./image/house.png" alt="">
           <div class="contents">
           <h3>Total Properties</h3>
-          <p>50</p>
+          <p><?php echo $total_property; ?></p>
         </div>
         </div>
         <div class="card">
