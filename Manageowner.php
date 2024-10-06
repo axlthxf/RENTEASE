@@ -96,7 +96,7 @@
           }
           if (isset($_POST['blockuser'])) {
             $user_id = $_POST['blockuser'];
-            $sql1 = "UPDATE `user` SET `status` = 'inactive' WHERE `user_id` = $user_id ";
+            $sql1 = "UPDATE `user` SET `status` = 'inactive' WHERE `user_id` = $user_id order by `status`";
             $result1 = mysqli_query($dbconnect, $sql1);
             if (mysqli_query($dbconnect, $sql1)) {
               echo "Status updated successfully";

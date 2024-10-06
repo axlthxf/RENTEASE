@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
   <div class="main-content">
     <!-- Vacancy Overview Section -->
      <?php
-                           $sql ="SELECT * FROM property WHERE status='vacant'";
+                           $sql ="SELECT * FROM property WHERE status='vacant' and user_id='$user_id'";
                            $result = mysqli_query($dbconnect, $sql);
                          
                          
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
                             $vacant = mysqli_num_rows($result);
      
                          }
-                           $sql ="SELECT * FROM property WHERE status='occupied'";
+                           $sql ="SELECT * FROM property WHERE status='occupied'and user_id='$user_id'";
                            $result = mysqli_query($dbconnect, $sql);
                          
                          
