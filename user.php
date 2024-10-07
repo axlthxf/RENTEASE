@@ -1,3 +1,16 @@
+<?php
+ $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+ if ($dbconnect->connect_error) {
+  die("Connection failed: " . $dbconnect->connect_error);
+ }
+  $sql = "SELECT * FROM property";
+  $result = mysqli_query($dbconnect, $sql);
+
+
+
+if ($result) {
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,17 +87,22 @@
       </div>
         </div>
         <div class="section2">
+        <?php
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            ?>
+            
           <div class="card">
-            <img src="./image/house 4.jpg" alt="Property Image">
+            <img src="image/<?php echo $row['image']; ?>" alt="Property Image">
             <div class="card-content">
-              <h3>Cozy Apartment in the City</h3>
-              <p>2 Bed | 2 Bath | 1200 sqft</p>
-              <p>Location: New York, NY</p>
-              <p class="price">$1500/month</p>
+              <h3><?php echo $row['property_name']; ?></h3>
+              <p><?php echo $row['bedroom']; ?> Bed | <?php echo $row['bathroom']; ?>  Bath |<?php echo $row['sqft']; ?>sqft</p>
+              <p>Location: <?php echo $row['location']; ?></p>
+              <p class="price">₹<?php echo $row['price']; ?>/month</p>
               <button>View Details</button>
             </div>
           </div>
-          <div class="card">
+          <!-- <div class="card">
             <img src="./image/house1.jpg" alt="Property Image">
             <div class="card-content">
               <h3>Cozy Apartment in the City</h3>
@@ -93,8 +111,8 @@
               <p class="price">$1500/month</p>
               <button>View Details</button>
             </div>
-          </div>
-          <div class="card">
+          </div> -->
+          <!-- <div class="card">
             <img src="./image/house2.jpg" alt="Property Image">
             <div class="card-content">
               <h3>Cozy Apartment in the City</h3>
@@ -103,8 +121,8 @@
               <p class="price">$1500/month</p>
               <button>View Details</button>
             </div>
-          </div>
-          <div class="card">
+          </div> -->
+          <!-- <div class="card">
             <img src="./image/house3.jpg" alt="Property Image">
             <div class="card-content">
               <h3>Cozy Apartment in the City</h3>
@@ -113,9 +131,20 @@
               <p class="price">$1500/month</p>
               <button>View Details</button>
             </div>
-          </div>
+          </div> -->
+          <?php
+        }
+    } else {
+        echo "<p>No properties available.</p>";
+    }
+    ?>
            </div>
            
 
 </body>
 </html>
+<?php
+} else {
+    echo "<p>Error executing query: " . mysqli_error($dbconnect) . "</p>"; // Handle query execution errors
+}
+mysqli_close($dbconnect); // Close the database connection
