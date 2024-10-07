@@ -9,19 +9,19 @@ if (isset($_SESSION['user'])) {
   exit();
 }
 
-// Initialize $property as an empty array to avoid undefined errors
+
 $property = [];
 
 if (isset($_GET['property_id'])) {
   $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
   $property_id = $_GET['property_id'];
 
-  // Fetch the property details based on the property ID
+
   $sql = "SELECT * FROM `property` WHERE `property_id` = '$property_id' AND `user_id` = '$user_id'";
   $result = mysqli_query($dbconnect, $sql);
 
   if (mysqli_num_rows($result) > 0) {
-    $property = mysqli_fetch_assoc($result); // Fetch property details
+    $property = mysqli_fetch_assoc($result); 
   } else {
     echo "Property not found!";
     exit();
@@ -40,25 +40,25 @@ if (isset($_POST['update'])) {
   $bathroom = $_POST['bathroom'];
   $sqft = $_POST['sqft'];
 
-  // Handle image upload
+ 
   if ($_FILES['property_image']['name']) {
     $property_image = $_FILES['property_image']['name'];
     $target_dir = "image/";
     $target_file = $target_dir . basename($property_image);
 
-    // Move the uploaded file to the server
-    if (move_uploaded_file($_FILES["property_image"]["tmp_name"], $target_file)) {
+
+    if ($target_file) {
       $image_update_query = "`image` = '$property_image',";
     } else {
       echo "<script>alert('Failed to upload new image. Keeping the old one.');</script>";
-      $image_update_query = ""; // Don't update image if upload fails
+      $image_update_query = ""; 
     }
   } else {
-    // No new image uploaded, keep the old image
+
     $image_update_query = "";
   }
 
-  // Update the property details in the database
+ 
   $update_query = "UPDATE `property` SET 
                       `property_name`='$property_name',
                       `property_number`='$property_number',
@@ -173,13 +173,11 @@ if (isset($_POST['update'])) {
           />
         </div>
 
-        <!-- Show current image -->
         <div class="form">
           <label for="current_image">Current Image:</label><br>
           <img src="image/<?php echo $property['image']; ?>" alt="Property Image" style="width:150px;">
         </div>
 
-        <!-- Image Upload -->
         <div class="form">
           <input
             type="file"
