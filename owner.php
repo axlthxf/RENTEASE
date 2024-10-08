@@ -2,7 +2,7 @@
 session_start();
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 if (isset($_SESSION['user'])) {
-  $user_id = $_SESSION['user']; // Assuming 'user' is where you store user_id in session
+  $user_id = $_SESSION['user']; 
 } else {
   header("Location: login.php");
   exit();
@@ -18,30 +18,28 @@ if (isset($_POST['submit'])) {
   $sqft = $_POST['sqft'];
   $property_image = $_FILES['property_image']['name'];
 
-  // Check if the property number already exists
+
   $check_property_query = "SELECT * FROM `property` WHERE `property_number` = '$property_number'";
   $result = mysqli_query($dbconnect, $check_property_query);
 
   if (mysqli_num_rows($result) > 0) {
     echo "<script>alert('A property with this number already exists! Please use a unique property number.');</script>";
   } else {
-    // Upload the image to the server
+  
     $target_dir = "image/";
     $target_file = $target_dir . basename($_FILES["property_image"]["name"]);
 
-    if (move_uploaded_file($_FILES["property_image"]["tmp_name"], $target_file)) {
-      // Insert the property into the database
       $insert_query = "INSERT INTO `property` (`user_id`, `property_name`, `property_number`, `location`, `price`, `bedroom`, `bathroom`, `sqft`, `image`, `status`) 
-                           VALUES ('$user_id', '$property_name', '$property_number', '$location', '$price', '$bedroom', '$bathroom', '$sqft', '$property_image', 'vaccant')";
+                           VALUES ('$user_id', '$property_name', '$property_number', '$location', '$price', '$bedroom', '$bathroom', '$sqft', '$target_file', 'vaccant')";
 
       if (mysqli_query($dbconnect, $insert_query)) {
         echo "<script>alert('Property listed successfully!');</script>";
       } else {
         echo "<script>alert('Error while listing the property.');</script>";
       }
-    } else {
-      echo "<script>alert('Failed to upload the image.');</script>";
-    }
+    // } else {
+    //   echo "<script>alert('Failed to upload the image.');</script>";
+    // }
   }
 }
 ?>
@@ -89,7 +87,7 @@ if (isset($_POST['submit'])) {
   <div class="main-content">
     <!-- Vacancy Overview Section -->
      <?php
-                           $sql ="SELECT * FROM property WHERE status='vacant' and user_id='$user_id'";
+                           $sql ="SELECT * FROM property WHERE status='vacant' AND user_id='$user_id'";
                            $result = mysqli_query($dbconnect, $sql);
                          
                          
@@ -97,7 +95,7 @@ if (isset($_POST['submit'])) {
                             $vacant = mysqli_num_rows($result);
      
                          }
-                           $sql ="SELECT * FROM property WHERE status='occupied'and user_id='$user_id'";
+                         $sql ="SELECT * FROM property WHERE status='occupied' AND user_id='$user_id'";
                            $result = mysqli_query($dbconnect, $sql);
                          
                          
