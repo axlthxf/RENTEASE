@@ -1,10 +1,46 @@
 <?php
+ 
  $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
  if ($dbconnect->connect_error) {
-  die("Connection failed: " . $dbconnect->connect_error);
+     die("Connection failed: " . $dbconnect->connect_error);
  }
-  $sql = "SELECT * FROM property";
-  $result = mysqli_query($dbconnect, $sql);
+ 
+ // Default SQL query to fetch all properties
+ $sql = "SELECT * FROM property";
+ 
+ // Check if the filter form is submitted
+ if (isset($_POST['filter'])) {
+     $conditions = [];
+ 
+     // Get filter values from the form
+     $bedrooms = isset($_POST['bedrooms']) ? $_POST['bedrooms'] : '';
+     $location = isset($_POST['location']) ? $_POST['location'] : '';
+     $sqft = isset($_POST['sqft']) ? $_POST['sqft'] : '';
+     $price = isset($_POST['price']) ? $_POST['price'] : '';
+ 
+     // Add conditions based on filters
+     if (!empty($bedrooms)) {
+         $conditions[] = "bedroom >= '$bedrooms'";
+     }
+     if (!empty($location)) {
+      $conditions[] = "location = '" . mysqli_real_escape_string($dbconnect, $location) . "'";
+  }
+  
+     if (!empty($sqft)) {
+         $conditions[] = "sqft >= '$sqft'";
+     }
+     if (!empty($price)) {
+         $conditions[] = "price <= '$price'";
+     }
+ 
+     // If there are conditions, append them to the SQL query
+     if (count($conditions) > 0) {
+         $sql .= " WHERE " . implode(' AND ', $conditions);
+     }
+ }
+ 
+ $result = mysqli_query($dbconnect, $sql);
+ 
 
 
 
@@ -47,11 +83,13 @@ if ($result) {
       </div>
       </nav>
     </div>
+    
 <div class="hero">
     <div class="banner">
         <div class="banner-content">
             <h1>Find Your Perfect Rental property with  <span>Rentease</span></h1>
             <p>Connecting Tenants and Landlords Seamlessly with Ease and Trust</p>
+            
             <!-- <div class="search-form">
                 <div class="search-options">
                     <button class="option">Full House</button>
@@ -86,6 +124,35 @@ if ($result) {
         </div>
       </div>
         </div>
+
+    <!-- Add Filter Form Here -->
+ <div class="filter">
+ <div class="filter-form">
+        <form method="POST" action="">
+            <select name="bedrooms">
+                <option value="">Select Bedrooms</option>
+                <option value="1">1 Bedroom</option>
+                <option value="2">2 Bedrooms</option>
+                <option value="3">3 Bedrooms</option>
+                <option value="4">4 Bedrooms</option>
+            </select>
+
+            <input type="text" name="location" placeholder="Enter Location">
+
+
+            <select name="sqft">
+                <option value="">Select Sqft</option>
+                <option value="500">500 sqft</option>
+                <option value="1000">1000 sqft</option>
+                <option value="1500">1500 sqft</option>
+            </select>
+
+            <input type="number" name="price" placeholder="Max Price">
+
+            <button type="submit" name="filter">Filter</button>
+        </form>
+    </div>
+ </div>
         <div class="section2">
         <?php
     if ($result->num_rows > 0) {
@@ -102,36 +169,6 @@ if ($result) {
               <button>View Details</button>
             </div>
           </div>
-          <!-- <div class="card">
-            <img src="./image/house1.jpg" alt="Property Image">
-            <div class="card-content">
-              <h3>Cozy Apartment in the City</h3>
-              <p>2 Bed | 2 Bath | 1200 sqft</p>
-              <p>Location: New York, NY</p>
-              <p class="price">$1500/month</p>
-              <button>View Details</button>
-            </div>
-          </div> -->
-          <!-- <div class="card">
-            <img src="./image/house2.jpg" alt="Property Image">
-            <div class="card-content">
-              <h3>Cozy Apartment in the City</h3>
-              <p>2 Bed | 2 Bath | 1200 sqft</p>
-              <p>Location: New York, NY</p>
-              <p class="price">$1500/month</p>
-              <button>View Details</button>
-            </div>
-          </div> -->
-          <!-- <div class="card">
-            <img src="./image/house3.jpg" alt="Property Image">
-            <div class="card-content">
-              <h3>Cozy Apartment in the City</h3>
-              <p>2 Bed | 2 Bath | 1200 sqft</p>
-              <p>Location: New York, NY</p>
-              <p class="price">$1500/month</p>
-              <button>View Details</button>
-            </div>
-          </div> -->
           <?php
         }
     } else {
@@ -145,6 +182,6 @@ if ($result) {
 </html>
 <?php
 } else {
-    echo "<p>Error executing query: " . mysqli_error($dbconnect) . "</p>"; // Handle query execution errors
+    echo "<p>Error executing query: " . mysqli_error($dbconnect) . "</p>"; 
 }
-mysqli_close($dbconnect); // Close the database connection
+mysqli_close($dbconnect); 
