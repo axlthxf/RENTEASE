@@ -157,6 +157,7 @@ if ($result) {
         <?php
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
+          
             ?>
             
           <div class="card">
@@ -166,7 +167,10 @@ if ($result) {
               <p><?php echo $row['bedroom']; ?> Bed | <?php echo $row['bathroom']; ?>  Bath |<?php echo $row['sqft']; ?>sqft</p>
               <p>Location: <?php echo $row['location']; ?></p>
               <p class="price">₹<?php echo $row['price']; ?>/month</p>
-              <button>View Details</button>
+              
+              <?php
+                echo "<a href='property_details.php?id=".$row["property_id"]."'><button>View Details</button></a>";
+            ?>   
             </div>
           </div>
           <?php
