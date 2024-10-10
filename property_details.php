@@ -54,7 +54,9 @@ if ($property_id > 0) {
   </div>
     <?php if (isset($property) && isset($owner)): ?>
         <div class="property-details">
+            <div class="pptyheading">
             <h1><?php echo $property['property_name']; ?></h1>
+            </div>
             <img src="image/<?php echo $property['image']; ?>" alt="Property Image">
             <div class="propertycontents">
             <p><strong>Location:</strong> <?php echo $property['location']; ?></p>
