@@ -4,6 +4,7 @@ $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 if ($dbconnect->connect_error) {
     die("Connection failed: " . $dbconnect->connect_error);
 }
+$row= [];
 
 // Get the property ID from the URL
 $property_id = isset($_GET["id"]) ? intval($_GET["id"]) : 0;
@@ -53,6 +54,7 @@ if ($property_id > 0) {
       </div>
   </div>
     <?php if (isset($property) && isset($owner)): ?>
+
         <div class="property-details">
             <div class="pptyheading">
             <h1><?php echo $property['property_name']; ?></h1>
@@ -73,7 +75,7 @@ if ($property_id > 0) {
         <div class="bookbutton">
             <!-- Booking Button -->
             <?php
-                echo "<a href='property_details.php?id=".$row["property_id"]."'><button>Book Property</button></a>";
+                echo "<a href='property_details.php?id=".$property['property_id']."'><button>Book Property</button></a>";
             ?> 
             </div>  
         </div>
