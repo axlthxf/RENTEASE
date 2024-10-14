@@ -74,14 +74,25 @@ if ($property_id > 0) {
         </div>
         <div class="bookbutton">
             <!-- Booking Button -->
-            <?php
-                echo "<a href='property_details.php?id=".$property['property_id']."'><button>Book Property</button></a>";
-            ?> 
+            <button onclick="confirmBooking(<?php echo $property['property_id']; ?>)">Book Property</button>
+
+                <!-- // echo "<a href='property_details.php?id=".$property['property_id']."'><button>Book Property</button></a>"; -->
+            
             </div>  
         </div>
     <?php else: ?>
         <p>Details not available.</p>
     <?php endif; ?>
+    <script>
+function confirmBooking(propertyId) {
+    if (confirm("Pay a token amount of ₹1000 to book this property.")) {
+        window.location.href = 'booking.php?property_id=' + propertyId;
+    } else {
+        alert("Booking canceled!");
+    }
+}
+</script>
+
 </body>
 </html>
 

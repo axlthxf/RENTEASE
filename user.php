@@ -90,22 +90,6 @@ if ($result) {
             <h1>Find Your Perfect Rental property with  <span>Rentease</span></h1>
             <p>Connecting Tenants and Landlords Seamlessly with Ease and Trust</p>
             
-            <!-- <div class="search-form">
-                <div class="search-options">
-                    <button class="option">Full House</button>
-                    <button class="option">Flatmates</button>
-                    <button class="option">Co-Living/PG</button>
-                </div> -->
-                <!-- <div class="search-inputs">
-                    <select class="location">
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Mumbai">Mumbai</option> -->
-                        <!-- Add more locations as needed -->
-                    <!-- </select>
-                    <input type="text" placeholder="Search Locality" class="locality">
-                    <button class="search-btn">Search</button>
-                </div> -->
             </div>
           </div>
           <div class="stats">
