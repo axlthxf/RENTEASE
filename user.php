@@ -1,9 +1,19 @@
 <?php
- 
- $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+session_start();
+$dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+if (isset($_SESSION['tenant'])) {
+  $user_id = $_SESSION['tenant']; 
+} else {
+  header("Location: login.php");
+  exit();
+}
  if ($dbconnect->connect_error) {
      die("Connection failed: " . $dbconnect->connect_error);
  }
+ 
+
+$payment_message = isset($_SESSION['payment_status']) ? $_SESSION['payment_status'] : '';
+unset($_SESSION['payment_status']); // Clear message after showing it
  
  // Default SQL query to fetch all properties
  $sql = "SELECT * FROM property";
@@ -56,6 +66,11 @@ if ($result) {
     <link rel="stylesheet" href="user.css">
 </head>
 <body>
+<?php if ($payment_message): ?>
+        <script>
+            alert('<?php echo $payment_message; ?>');
+        </script>
+    <?php endif; ?>
     <div class="header">
         <!-- <div class="logo">
             <img src="/image/renteaselogo21.png" alt="Rentease Logo">

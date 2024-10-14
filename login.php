@@ -65,6 +65,7 @@ if (isset($_POST['submit'])) {
                 if ($row['password'] == $password) {
                     
                     if ($row['user_type'] == 0) {
+                      $_SESSION['tenant'] =$row1['user_id'];
                       header('Location: user.php');  
                       exit();
                     } else if ($row['user_type'] == 1) {

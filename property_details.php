@@ -1,10 +1,14 @@
 <?php
 // Connect to the database
+session_start();
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+if (isset($_SESSION['tenant'])) {
+  $user_id = $_SESSION['tenant']; 
+} 
 if ($dbconnect->connect_error) {
     die("Connection failed: " . $dbconnect->connect_error);
 }
-$row= [];
+
 
 // Get the property ID from the URL
 $property_id = isset($_GET["id"]) ? intval($_GET["id"]) : 0;
@@ -86,7 +90,7 @@ if ($property_id > 0) {
     <script>
 function confirmBooking(propertyId) {
     if (confirm("Pay a token amount of ₹1000 to book this property.")) {
-        window.location.href = 'booking.php?property_id=' + propertyId;
+        window.location.href = 'property_booking.php?property_id=' + propertyId;
     } else {
         alert("Booking canceled!");
     }
