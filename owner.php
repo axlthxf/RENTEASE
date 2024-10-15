@@ -26,20 +26,20 @@ if (isset($_POST['submit'])) {
     echo "<script>alert('A property with this number already exists! Please use a unique property number.');</script>";
   } else {
   
-    $target_dir = "image/";
-    $target_file = $target_dir . basename($_FILES["property_image"]["name"]);
+    
+    $target_file = basename($_FILES["property_image"]["name"]);
 
       $insert_query = "INSERT INTO `property` (`user_id`, `property_name`, `property_number`, `location`, `price`, `bedroom`, `bathroom`, `sqft`, `image`, `status`) 
                            VALUES ('$user_id', '$property_name', '$property_number', '$location', '$price', '$bedroom', '$bathroom', '$sqft', '$target_file', 'vaccant')";
-
+ if ($target_file){
       if (mysqli_query($dbconnect, $insert_query)) {
         echo "<script>alert('Property listed successfully!');</script>";
       } else {
         echo "<script>alert('Error while listing the property.');</script>";
       }
-    // } else {
-    //   echo "<script>alert('Failed to upload the image.');</script>";
-    // }
+    } else {
+      echo "<script>alert('Failed to upload the image.');</script>";
+    }
   }
 }
 ?>

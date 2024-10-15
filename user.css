@@ -236,7 +236,7 @@ nav .options li a:hover {
   background: rgb(255, 255, 255);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);    
+  /* grid-template-rows: repeat(4, 1fr);     */
   gap: 10px; 
   padding: 20px;
   padding-top: 30px;
