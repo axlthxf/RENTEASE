@@ -84,7 +84,7 @@ if ($result) {
           <div class="logo">
             <a href="">  <img src="./image/renteaselogo21.png" alt="Logo" /></a>
           </div>
-        <div class="options">
+            <div class="options">
           <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
@@ -92,8 +92,8 @@ if ($result) {
             <li><a href="#">Contact</a></li>
           </ul>
           <div class="logout">
-             <a href="login.php"> <button>Logout</button></a>
-             <img src="" alt="">
+              <a href="login.php"> <button>Logout</button></a>
+              <a href="userprofile.php">  <img src="./image/profile.png" alt=""></a>
             </div>
         </div>
       </div>
