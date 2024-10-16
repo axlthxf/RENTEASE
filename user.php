@@ -93,6 +93,7 @@ if ($result) {
           </ul>
           <div class="logout">
              <a href="login.php"> <button>Logout</button></a>
+             <img src="" alt="">
             </div>
         </div>
       </div>
