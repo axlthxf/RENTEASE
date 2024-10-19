@@ -1,5 +1,5 @@
 <?php
-session_start();  
+session_start();
 
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 if ($dbconnect->connect_error) {
@@ -7,7 +7,7 @@ if ($dbconnect->connect_error) {
 }
 
 if (isset($_SESSION['tenant'])) {
-    $user_id = $_SESSION['tenant'];  
+    $user_id = $_SESSION['tenant'];
 } else {
     header("Location: login.php");
     exit();
@@ -24,11 +24,17 @@ if ($property_id > 0) {
             $expiry_date = $_POST['expiry_date'];
             $cvv = $_POST['cvv'];
 
-           
-            if ($card_number && $expiry_date && $cvv) {
-                $booking_date = date('Y-m-d H:i:s'); 
-                $booking_sql = "INSERT INTO bookings (user_id, property_id, booking_date) VALUES ($user_id, $property_id, '$booking_date')";
 
+            if ($card_number && $expiry_date && $cvv) {
+                $booking_date = date('Y-m-d H:i:s');
+                $booking_sql = "INSERT INTO bookings (user_id, property_id, booking_date, status) 
+                                          VALUES ($user_id, $property_id, '$booking_date', 'pending')";
+
+                if (mysqli_query($dbconnect, $booking_sql)) {
+                    $_SESSION['payment_status'] = 'Payment successful! Your booking request has been sent to the owner.';
+                    header("Location: user.php");
+                    exit();
+                }
                 if (mysqli_query($dbconnect, $booking_sql)) {
                     $_SESSION['payment_status'] = 'Payment successful! You have successfully booked the property.';
                     header("Location: user.php");
@@ -40,7 +46,7 @@ if ($property_id > 0) {
                 echo "Please fill in all card details.";
             }
         } elseif ($payment_method == 'gpay' || $payment_method == 'paytm') {
-            $booking_date = date('Y-m-d H:i:s'); 
+            $booking_date = date('Y-m-d H:i:s');
             $booking_sql = "INSERT INTO bookings (user_id, property_id, booking_date) VALUES ($user_id, $property_id, '$booking_date')";
 
             if (mysqli_query($dbconnect, $booking_sql)) {
@@ -63,25 +69,27 @@ mysqli_close($dbconnect);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Page</title>
     <link rel="stylesheet" href="booking.css">
 </head>
+
 <body>
-<div class="header">
-<div class="logo">
-           <a href="user.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
+    <div class="header">
+        <div class="logo">
+            <a href="user.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
         </div>
-    <h1>BOOKINGS</h1>
-    <div class=""></div>
-      </div>
-  </div>
-<div class="payment-container">
+        <h1>BOOKINGS</h1>
+        <div class=""></div>
+    </div>
+    </div>
+    <div class="payment-container">
         <h1>Make Payment</h1>
         <p>Please pay a token amount of ₹1000 to complete the booking.</p>
-        
+
         <form method="POST" action="">
             <label for="payment_method">Choose Payment Method:</label>
             <select id="payment_method" name="payment_method" required>
@@ -119,12 +127,12 @@ mysqli_close($dbconnect);
     </div>
 
     <script>
-        document.getElementById('payment_method').addEventListener('change', function() {
+        document.getElementById('payment_method').addEventListener('change', function () {
             var method = this.value;
             var cardDetails = document.getElementById('card_details');
             var gpayDetails = document.getElementById('gpay_details');
             var paytmDetails = document.getElementById('paytm_details');
-            
+
             cardDetails.style.display = 'none';
             gpayDetails.style.display = 'none';
             paytmDetails.style.display = 'none';
@@ -139,4 +147,5 @@ mysqli_close($dbconnect);
         });
     </script>
 </body>
+
 </html>

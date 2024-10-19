@@ -1,5 +1,9 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 if (isset($_SESSION['user'])) {
   $user_id = $_SESSION['user']; 
@@ -8,6 +12,24 @@ if (isset($_SESSION['user'])) {
   exit();
 }
 
+if (isset($_SESSION['tenant'])) {
+  $tenant_id = $_SESSION['tenant']; 
+}
+
+// Initialize $bookingResult to null
+$bookingResult = null;
+
+// After checking if the user is logged in
+if (isset($tenant_id)) {
+  echo "<script>console.log('Tenant ID: $tenant_id');</script>";
+
+  $checkbooking = "SELECT * FROM `bookings` WHERE `user_id` = '$tenant_id' AND status = 'pending'";
+  $bookingResult = mysqli_query($dbconnect, $checkbooking);
+
+  if (!$bookingResult) {
+      echo "<script>alert('Error fetching bookings: " . mysqli_error($dbconnect) . "');</script>";
+  }
+}
 if (isset($_POST['submit'])) {
   $property_name = $_POST['property_name'];
   $property_number = $_POST['property_number'];
@@ -21,6 +43,8 @@ if (isset($_POST['submit'])) {
 
   $check_property_query = "SELECT * FROM `property` WHERE `property_number` = '$property_number'";
   $result = mysqli_query($dbconnect, $check_property_query);
+
+
 
   if (mysqli_num_rows($result) > 0) {
     echo "<script>alert('A property with this number already exists! Please use a unique property number.');</script>";
@@ -72,6 +96,10 @@ if (isset($_POST['submit'])) {
       <div class="options">
         <a href="#add-property" id="add-property-btn">Add Property</a>
       </div>
+      <div class="options">
+  <a href="#manage-bookings" id="manage-bookings-btn">Manage Bookings</a>
+</div>
+
       <!-- <div class="options">
           <a href="Tenant.php" onclick="showSection('manageTenants')"
             >Profile</a
@@ -230,22 +258,102 @@ if (isset($_POST['submit'])) {
         <button type="submit" name="submit">List Property</button>
       </form>
     </section>
+    <!-- Manage Bookings Section -->
+<!-- Manage Bookings Section -->
+<section id="manage-bookings-section" class="hidden">
+  <h2>Manage Bookings</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Property Name</th>
+        <th>Tenant</th>
+        <th>Booking Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+    if (isset($bookingResult) && $bookingResult && mysqli_num_rows($bookingResult) > 0) {
+    while ($bookingrow = mysqli_fetch_assoc($bookingResult)) {
+        // Fetch tenant details for this booking
+        $tenantQuery = "SELECT name FROM user WHERE user_id = '$tenant_id'"; // Use tenant_id from booking
+        $tenantResult = mysqli_query($dbconnect, $tenantQuery);
+        if ($tenantResult && mysqli_num_rows($tenantResult) > 0) {
+            $tenantrow = mysqli_fetch_assoc($tenantResult);
+        } else {
+            echo "<script>console.log('Error: No tenant found for user_id: " . $bookingrow['user_id'] . "');</script>";
+            continue; // Skip this booking if no tenant found
+        }
+
+        // Fetch property details for this booking
+        $property_id = $bookingrow['property_id'];
+        $propertyQuery = "SELECT property_name FROM property WHERE property_id = '$property_id'";
+        $propertyResult = mysqli_query($dbconnect, $propertyQuery);
+        if ($propertyResult && mysqli_num_rows($propertyResult) > 0) {
+            $propertyrow = mysqli_fetch_assoc($propertyResult);
+            $_SESSION['pptyname'] =$propertyrow['property_name'];
+        } else {
+            echo "<script>console.log('Error: No property found for property_id: " . $property_id . "');</script>";
+            continue; // Skip this booking if no property found
+        }
+
+        echo "<tr>";
+        echo "<td>" . $bookingrow["booking_id"] . "</td>";
+        echo "<td>" . $propertyrow["property_name"] . "</td>"; // Property name
+        echo "<td>" . $tenantrow["name"] . "</td>"; // Tenant name
+        echo "<td>" . $bookingrow["booking_date"] . "</td>"; // Booking date
+        echo "<td>" . $bookingrow["status"] . "</td>"; // Booking status
+        echo "<td><a href='accept_booking.php?booking_id=" . $bookingrow["booking_id"] . "'><button style=' background-color: #28a745; border:none; cursor: pointer';>Accept</button></a> | <a href='decline_booking.php?booking_id=" . $bookingrow["booking_id"] . "'><button style=' background-color: #dc3545; border:none; cursor: pointer'>Decline</button></a></td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='6'>No booking requests found</td></tr>";
+}
+?>
+
+    </tbody>
+  </table>
+</section>
+
+
+
   </div>
 
   <script>
-    const listPropertiesBtn = document.getElementById("list-properties");
-    const propertiesSection = document.getElementById("properties-section");
-    const addPropertyBtn = document.getElementById("add-property-btn");
-    const addPropertySection = document.getElementById("add-property-section");
+const listPropertiesBtn = document.getElementById("list-properties");
+const propertiesSection = document.getElementById("properties-section");
+const addPropertyBtn = document.getElementById("add-property-btn");
+const addPropertySection = document.getElementById("add-property-section");
+const manageBookingsBtn = document.getElementById("manage-bookings-btn");
+const manageBookingsSection = document.getElementById("manage-bookings-section");
 
-    listPropertiesBtn.addEventListener("click", function () {
-      addPropertySection.classList.add("hidden");
-      propertiesSection.classList.remove("hidden");
-    });
-    addPropertyBtn.addEventListener("click", function () {
-      propertiesSection.classList.add("hidden");
-      addPropertySection.classList.remove("hidden");
-    });
+// Function to hide all sections
+function hideAllSections() {
+  propertiesSection.classList.add("hidden");
+  addPropertySection.classList.add("hidden");
+  manageBookingsSection.classList.add("hidden");
+}
+
+// Show Properties Section
+listPropertiesBtn.addEventListener("click", function () {
+  hideAllSections();
+  propertiesSection.classList.remove("hidden");
+});
+
+// Show Add Property Section
+addPropertyBtn.addEventListener("click", function () {
+  hideAllSections();
+  addPropertySection.classList.remove("hidden");
+});
+
+// Show Manage Bookings Section
+manageBookingsBtn.addEventListener("click", function () {
+  hideAllSections();
+  manageBookingsSection.classList.remove("hidden");
+});
+
 
   </script>
 </body>

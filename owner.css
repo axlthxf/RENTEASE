@@ -281,5 +281,26 @@ tbody tr:hover td::before {
 tbody tr:hover td::before {
   transform: scaleY(1);
 }
+.hidden {
+  display: none;
+}
+/* Accept button styles */
+.acceptbt {
+  background-color: #28a745; /* Green background */
+}
 
+.acceptbt:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Decline button styles */
+a .declinebt {
+  background-color: #dc3545; /* Red background */
+}
+
+.declinebut:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
   
