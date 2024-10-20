@@ -86,6 +86,7 @@ if ($result) {
                     <li><a href="#">About</a></li>
                     <li><a href="#">Properties</a></li>
                     <li><a href="#">Contact</a></li>
+                    <li><a href="tenantbooking.php">Bookings</a></li>
                 </ul>
                 <div class="logout">
                     <a href="login.php"> <button>Logout</button></a>

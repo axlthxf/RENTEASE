@@ -305,7 +305,7 @@ if (isset($_POST['submit'])) {
         echo "<td>" . $tenantrow["name"] . "</td>"; // Tenant name
         echo "<td>" . $bookingrow["booking_date"] . "</td>"; // Booking date
         echo "<td>" . $bookingrow["status"] . "</td>"; // Booking status
-        echo "<td><a href='accept_booking.php?booking_id=" . $bookingrow["booking_id"] . "'><button style=' background-color: #28a745; border:none; cursor: pointer';>Accept</button></a> | <a href='decline_booking.php?booking_id=" . $bookingrow["booking_id"] . "'><button style=' background-color: #dc3545; border:none; cursor: pointer'>Decline</button></a></td>";
+        echo "<td><a href='accept_booking.php?booking_id=" . $bookingrow["booking_id"] . "'><button style=' background-color: #28a745; color:white; border-radius:5px; border:none; cursor: pointer';>Accept</button></a> | <a href='decline_booking.php?booking_id=" . $bookingrow["booking_id"] . "'><button style=' background-color: #dc3545; color:white; border-radius:5px; border:none; cursor: pointer'>Decline</button></a></td>";
         echo "</tr>";
     }
 } else {

@@ -37,7 +37,7 @@ nav {
 nav .options {
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 60%;
   gap: 20px;
 }
 nav .options ul {
@@ -222,6 +222,7 @@ nav .options li a:hover {
   justify-content: center;
   padding: 50px 20px;
   color: white;
+  margin-top: -95px;
 }
 
 .stat-box {
