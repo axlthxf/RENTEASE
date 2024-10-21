@@ -37,7 +37,7 @@ nav {
 nav .options {
   display: flex;
   align-items: center;
-  width: 60%;
+  width: 70%;
   gap: 20px;
 }
 nav .options ul {
@@ -395,6 +395,12 @@ nav .options li a:hover {
 }
 
 .cart:hover{
+  transform: scale(1);
+      cursor: pointer;
+  /* top: -0.16em;
+  transition: padding 0.5s, top 0.35s, box-shadow 0.4s; */
+}
+.cart .color:hover{
   transform: scale(1);
       cursor: pointer;
   /* top: -0.16em;

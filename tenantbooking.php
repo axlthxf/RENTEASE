@@ -69,14 +69,22 @@ $bookingResult = mysqli_query($dbconnect, $bookingQuery);
                             <td>₹<?php echo $propertyrow['price']; ?></td>
                             <td><?php echo ucfirst($bookingrow['status']); ?></td>
                             <td>
-                                <?php if ($bookingrow['status'] !== 'cancelled'): ?>
-                                    <form method="POST" action="cancel_booking.php">
-                                        <input type="hidden" name="booking_id" value="<?php echo $bookingrow['booking_id']; ?>">
-                                        <button type="submit" class="cancel-button">Cancel Booking</button>
-                                    </form>
+                                <?php if ($bookingrow['status'] !== 'rejected'): ?>
+                                    
+                                        <!-- <input type="hidden" name="booking_id" value=""> -->
+                                        <button onclick="confirmBooking(<?php echo $bookingrow['booking_id']; ?>)">Cancel Property</button>                                    </form>
                                 <?php else: ?>
-                                    <p class="canceled-msg">Canceled</p>
+                                    <p class="canceled-msg">Rejected</p>
                                 <?php endif; ?>
+                                <script>
+function confirmBooking(bookingId) {
+    if (confirm("Are you sure you want to cancel this property")) {
+        window.location.href = 'cancel.php?booking_id=' + bookingId;
+    } else {
+        alert("Booking canceled!");
+    }
+}
+</script>
                             </td>
                         </tr>
                         <?php
