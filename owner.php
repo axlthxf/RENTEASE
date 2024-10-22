@@ -99,6 +99,9 @@ if (isset($_POST['submit'])) {
       <div class="options">
   <a href="#manage-bookings" id="manage-bookings-btn">Manage Bookings</a>
 </div>
+      <div class="options">
+  <a href="#manage-bookings" id="manage-bookings-btn">View Profile</a>
+</div>
 
       <!-- <div class="options">
           <a href="Tenant.php" onclick="showSection('manageTenants')"
