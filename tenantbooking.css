@@ -92,6 +92,8 @@
   
   tbody td .cancel-button:hover {
     background-color: #c0392b;
+    transform: scale(.9);
+    cursor: pointer;
   }
   
   .canceled-msg {

@@ -72,7 +72,7 @@ $bookingResult = mysqli_query($dbconnect, $bookingQuery);
                                 <?php if ($bookingrow['status'] !== 'rejected'): ?>
                                     
                                         <!-- <input type="hidden" name="booking_id" value=""> -->
-                                        <button onclick="confirmBooking(<?php echo $bookingrow['booking_id']; ?>)">Cancel Property</button>                                    </form>
+                                        <button class="cancel-button " onclick="confirmBooking(<?php echo $bookingrow['booking_id']; ?>)">Cancel Property</button>                                    </form>
                                 <?php else: ?>
                                     <p class="canceled-msg">Rejected</p>
                                 <?php endif; ?>
@@ -80,9 +80,7 @@ $bookingResult = mysqli_query($dbconnect, $bookingQuery);
 function confirmBooking(bookingId) {
     if (confirm("Are you sure you want to cancel this property")) {
         window.location.href = 'cancel.php?booking_id=' + bookingId;
-    } else {
-        alert("Booking canceled!");
-    }
+    } 
 }
 </script>
                             </td>

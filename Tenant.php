@@ -12,14 +12,11 @@
       </div>
       <div class="menu">
         <div class="logo">
-         <a href="home.html"> <img src="./image/renteaseadmin-removebg-preview1.png" alt=""></a>
+         <a href="admin.php"> <img src="./image/renteaseadmin-removebg-preview1.png" alt=""></a>
           <!-- <hr> -->
         </div>
         <div class="sidebar">
-          <div class="options">
    
-            <a href="#properties">Manage Properties</a>
-          </div>
           <div class="options">
             <a href="Manageowner.php">Manage Landlords</a>
           </div>
@@ -29,7 +26,7 @@
           </div>
           <div class="options">
   
-            <a href="#settings">Log out</a>
+            <a href="login.php">Log out</a>
           </div>
           <!-- <hr> -->
         </div>

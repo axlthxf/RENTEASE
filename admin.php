@@ -67,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         </div>
         <div class="options">
   
-          <a href="Tenant.php">Manage Bookings</a>
+          <a href="ManageBooking.php">Manage Bookings</a>
         </div>
         <div class="options">
   

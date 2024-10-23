@@ -32,6 +32,20 @@ if ($property_id > 0) {
         } else {
             echo "<p>Owner details not found.</p>";
         }
+        $booking_sql = "SELECT status FROM bookings WHERE property_id = $property_id LIMIT 1";
+        $booking_result = mysqli_query($dbconnect, $booking_sql);
+
+        if ($booking_result && mysqli_num_rows($booking_result) > 0) {
+            $booking = mysqli_fetch_assoc($booking_result);
+            $booking_status = $booking['status']; // Get the booking status
+        } else {
+            $booking_status = 'available'; // If no booking found, consider it available
+        }
+        // Check if the tenant has any active bookings
+$active_booking_sql = "SELECT status FROM bookings WHERE user_id = $user_id AND (status = 'accepted' OR status = 'pending')";
+$active_booking_result = mysqli_query($dbconnect, $active_booking_sql);
+
+$has_active_booking = (mysqli_num_rows($active_booking_result) > 0);
     } else {
         echo "<p>Property not found.</p>";
     }
@@ -51,7 +65,7 @@ if ($property_id > 0) {
 <body>
 <div class="header">
 <div class="logo">
-           <a href="owner.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
+           <a href="user.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
         </div>
     <h1>PROPERTY DETAILS</h1>
     <div class=""></div>
@@ -77,11 +91,13 @@ if ($property_id > 0) {
         <p><strong>Owner Contact:</strong> <?php echo $owner['phno']; ?></p>
         </div>
         <div class="bookbutton">
-            <!-- Booking Button -->
-            <button onclick="confirmBooking(<?php echo $property['property_id']; ?>)">Book Property</button>
-
-                <!-- // echo "<a href='property_details.php?id=".$property['property_id']."'><button>Book Property</button></a>"; -->
-            
+        <?php if ($has_active_booking): ?>
+        <p style="color:red;"><strong>You already have an active booking.</strong></p>
+    <?php elseif ($booking_status == 'accepted' || $booking_status == 'pending'): ?>
+        <p style="color:red;"><strong>Property is already booked.</strong></p>
+    <?php else: ?>
+        <button onclick="confirmBooking(<?php echo $property['property_id']; ?>)">Book Property</button>
+    <?php endif; ?>
             </div>  
         </div>
     <?php else: ?>

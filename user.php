@@ -84,7 +84,7 @@ if ($result) {
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
-                    <li><a href="#">Properties</a></li>
+                    <li><a href="#property">Properties</a></li>
                     <li><a href="#">Contact</a></li>
                     <li><a href="tenantbooking.php">Bookings</a></li>
                 </ul>
@@ -161,7 +161,7 @@ if ($result) {
     </div>
 </div>
 
-<div class="section2">
+<div id="property" class="section2">
     <?php
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {

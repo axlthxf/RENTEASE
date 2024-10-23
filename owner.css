@@ -303,4 +303,74 @@ a .declinebt {
   background-color: #c82333; /* Darker red on hover */
   transform: translateY(-2px); /* Slight lift on hover */
 }
-  
+  /* Profile container styling */
+.profile-container {
+  width: 50%;
+  margin: auto;
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.profile-container h2{
+  padding-bottom: 20px;
+}
+
+/* Profile header styling */
+.profile-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Input group styling */
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  flex: 0.2;
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  margin-right: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.input-group .edit-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #007bff;
+  margin-left: 10px;
+}
+
+/* Save button styling */
+.profile-container button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+}
+
+.profile-container button[type="submit"]:hover {
+  background-color: #218838;
+}

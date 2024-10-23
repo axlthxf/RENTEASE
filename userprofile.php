@@ -57,7 +57,7 @@ mysqli_close($dbconnect);
 <body>
 <div class="header">
         <div class="logo">
-           <a href="owner.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
+           <a href="user.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
         </div>
         <div class="feedback-header">
         <h1>Tenant Profile</h1>

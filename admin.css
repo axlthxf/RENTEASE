@@ -95,9 +95,12 @@ body {
 }
 .card h3 {
   margin-top: 0;
+  font-size: 25px;
 }
 .card p {
   margin: 5px 0;
+  font-size: 20px;
+  font-weight: 900;
 }
   .overview {
     /* display: grid;
@@ -109,13 +112,14 @@ body {
     justify-content: center;
     align-items: center;
     gap:40px;
+    flex-wrap: wrap;
 
 }
 .overview .card{
   background-color: white;
   padding: 20px;
-  width: 300px;
-  height: 100px;
+  width: 400px;
+  height: 200px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
@@ -126,7 +130,7 @@ body {
   margin: 0 0 10px;
 }
 .overview div img{
-  width: 50px;
+  width: 60px;
 }
 .contents {
   display: flex;

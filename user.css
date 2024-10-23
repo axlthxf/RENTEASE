@@ -3,9 +3,11 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  
 }
 
 body {
+  scroll-behavior: smooth;
   background-color: #f4f4f4;
 }
 
@@ -113,7 +115,7 @@ nav .options li a:hover {
   border: 2px solid #0e2c9a;
   top: -0.16em;
   transition: padding 0.5s, top 0.35s, box-shadow 0.4s;
-  box-shadow: 0 0.4rem 0 -0.2rem #b2b0b0;
+  box-shadow: 0 0.4rem 0 -0.2rem #ffffff;
 }
 .list-property {
   background-color: #007BFF;

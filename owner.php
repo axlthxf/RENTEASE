@@ -99,8 +99,8 @@ if (isset($_POST['submit'])) {
       <div class="options">
   <a href="#manage-bookings" id="manage-bookings-btn">Manage Bookings</a>
 </div>
-      <div class="options">
-  <a href="#manage-bookings" id="manage-bookings-btn">View Profile</a>
+<div class="options">
+  <a href="#view-profile" id="view-profile-btn">View Profile</a>
 </div>
 
       <!-- <div class="options">
@@ -322,6 +322,66 @@ if (isset($_POST['submit'])) {
 
 
 
+
+<!-- Owner Profile Section -->
+<section id="view-profile-section" class="profile-container hidden">
+<?php
+// Handle profile update
+if (isset($_POST['update-profile'])) {
+  $name = mysqli_real_escape_string($dbconnect, $_POST['name']);
+  $email = mysqli_real_escape_string($dbconnect, $_POST['email']);
+  $phone = mysqli_real_escape_string($dbconnect, $_POST['phone']);
+  
+  // Update owner details in the database
+  $updateQuery = "UPDATE user SET name='$name', email='$email', phno='$phone' WHERE user_id='$user_id'";
+  
+  if (mysqli_query($dbconnect, $updateQuery)) {
+    echo "<script>alert('Profile updated successfully.');</script>";
+  } else {
+    echo "<script>alert('Error updating profile: " . mysqli_error($dbconnect) . "');</script>";
+  }
+}
+
+// Fetch owner details for profile form
+$sql = "SELECT * FROM user WHERE user_id = '$user_id'";
+$result = mysqli_query($dbconnect, $sql);
+
+if ($result && mysqli_num_rows($result) > 0) {
+  $owner = mysqli_fetch_assoc($result);
+} else {
+  echo "Error fetching owner details.";
+  exit();
+}
+?>
+  <h2>Owner Profile</h2>
+  <?php if (isset($_SESSION['message'])): ?>
+            <p style="color:green;"><?php echo $_SESSION['message']; unset($_SESSION['message']); ?></p>
+        <?php endif; ?>
+  <form method="POST" action="owner.php">
+    <label for="name">Name:</label>
+    <div class="input-group">
+      <input type="text" id="name" name="name" value="<?php echo $owner['name']; ?>" readonly>
+      <button type="button" class="edit-btn" onclick="editField('name')">✏️</button>
+    </div>
+
+    <label for="email">Email:</label>
+    <div class="input-group">
+      <input type="email" id="email" name="email" value="<?php echo $owner['email']; ?>" readonly>
+      <button type="button" class="edit-btn" onclick="editField('email')">✏️</button>
+    </div>
+
+    <label for="phone">Phone:</label>
+    <div class="input-group">
+      <input type="text" id="phone" name="phone" value="<?php echo $owner['phno']; ?>" readonly>
+      <button type="button" class="edit-btn" onclick="editField('phone')">✏️</button>
+    </div>
+
+    <!-- Save button -->
+    <button type="submit" name="update-profile">Save Changes</button>
+  </form>
+</section>
+
+
   </div>
 
   <script>
@@ -331,12 +391,15 @@ const addPropertyBtn = document.getElementById("add-property-btn");
 const addPropertySection = document.getElementById("add-property-section");
 const manageBookingsBtn = document.getElementById("manage-bookings-btn");
 const manageBookingsSection = document.getElementById("manage-bookings-section");
+const viewProfileBtn = document.getElementById("view-profile-btn");
+const viewProfileSection = document.getElementById("view-profile-section");
 
 // Function to hide all sections
 function hideAllSections() {
   propertiesSection.classList.add("hidden");
   addPropertySection.classList.add("hidden");
   manageBookingsSection.classList.add("hidden");
+  viewProfileSection.classList.add("hidden");
 }
 
 // Show Properties Section
@@ -356,8 +419,15 @@ manageBookingsBtn.addEventListener("click", function () {
   hideAllSections();
   manageBookingsSection.classList.remove("hidden");
 });
+// Show View Profile Section
+viewProfileBtn.addEventListener("click", function () {
+  hideAllSections();
+  viewProfileSection.classList.remove("hidden");
+});
 
-
+function editField(fieldId) {
+  document.getElementById(fieldId).removeAttribute('readonly');
+}
   </script>
 </body>
 
