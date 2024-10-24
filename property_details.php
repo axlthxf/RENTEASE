@@ -32,16 +32,16 @@ if ($property_id > 0) {
         } else {
             echo "<p>Owner details not found.</p>";
         }
-        $booking_sql = "SELECT status FROM bookings WHERE property_id = $property_id LIMIT 1";
+        $booking_sql = "SELECT status FROM bookings WHERE property_id = $property_id ";
         $booking_result = mysqli_query($dbconnect, $booking_sql);
 
         if ($booking_result && mysqli_num_rows($booking_result) > 0) {
             $booking = mysqli_fetch_assoc($booking_result);
             $booking_status = $booking['status']; // Get the booking status
+            // echo $booking_status;
         } else {
-            $booking_status = 'available'; // If no booking found, consider it available
+            $booking_status = 'rejected'; 
         }
-        // Check if the tenant has any active bookings
 $active_booking_sql = "SELECT status FROM bookings WHERE user_id = $user_id AND (status = 'accepted' OR status = 'pending')";
 $active_booking_result = mysqli_query($dbconnect, $active_booking_sql);
 

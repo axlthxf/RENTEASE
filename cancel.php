@@ -14,16 +14,13 @@ if (isset($_GET['booking_id'])) {
     $booking_id = $_GET['booking_id'];
     $tenantid = $_SESSION['tenant'];
 
-    // Fixed token amount
-    $token_amount = 1000; // Fixed token amount of ₹1000
+    $token_amount = 1000; 
 
-    // Check if the booking status is 'accepted' or 'pending'
     $statusQuery = "SELECT status FROM bookings WHERE booking_id='$booking_id' AND user_id='$tenantid'";
     $statusResult = mysqli_query($dbconnect, $statusQuery);
     $statusRow = mysqli_fetch_assoc($statusResult);
     
     if ($statusRow && ($statusRow['status'] === 'accepted' || $statusRow['status'] === 'pending')) {
-        // Update the booking status to 'cancelled'
         $cancelQuery = "UPDATE bookings SET status='rejected' WHERE booking_id='$booking_id' AND user_id='$tenantid'";
         if (mysqli_query($dbconnect, $cancelQuery)) {
             $refundAmount = $token_amount * 0.7;
