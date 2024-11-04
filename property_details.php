@@ -1,5 +1,4 @@
 <?php
-// Connect to the database
 session_start();
 $dbconnect = mysqli_connect("localhost", "root", "", "rentease");
 if (isset($_SESSION['tenant'])) {
@@ -10,19 +9,16 @@ if ($dbconnect->connect_error) {
 }
 
 
-// Get the property ID from the URL
 $property_id = isset($_GET["id"]) ? intval($_GET["id"]) : 0;
 
 if ($property_id > 0) {
-    // Fetch property details from the property table
     $property_sql = "SELECT * FROM property WHERE property_id = $property_id";
     $property_result = mysqli_query($dbconnect, $property_sql);
 
     if ($property_result && mysqli_num_rows($property_result) > 0) {
         $property = mysqli_fetch_assoc($property_result);
         
-        // Now fetch the owner details from the users table using owner_id
-        $owner_id = $property['user_id']; // Assuming property table has an 'owner_id' column
+        $owner_id = $property['user_id']; 
 
         $owner_sql = "SELECT * FROM user WHERE user_id = $owner_id ";
         $owner_result = mysqli_query($dbconnect, $owner_sql);
@@ -37,8 +33,7 @@ if ($property_id > 0) {
 
         if ($booking_result && mysqli_num_rows($booking_result) > 0) {
             $booking = mysqli_fetch_assoc($booking_result);
-            $booking_status = $booking['status']; // Get the booking status
-            // echo $booking_status;
+            $booking_status = $booking['status']; 
         } else {
             $booking_status = 'rejected'; 
         }

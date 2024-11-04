@@ -94,6 +94,23 @@ mysqli_close($dbconnect);
 
             <!-- Save button -->
             <button type="submit">Save Changes</button>
+            <button 
+    type="button" 
+    onclick="location.href='feedback.php'" 
+    style="
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        padding: 10px 20px; /* Padding */
+        font-size: 16px; /* Font size */
+        border: none; /* Remove borders */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        margin-top: 10px; /* Space above button */
+    "
+>
+    Give Feedback
+</button>
+
         </form>
     </div>
 

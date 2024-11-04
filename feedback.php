@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +28,7 @@
                 <h2>Send us your feedback!</h2>
                 <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
             </div>
-            <form action="submit_feedback.php" method="POST">
+            <form action="feedback_success.php" method="POST">
                 <div class="experience-rating">
                     <p>How was your experience?</p>
                     <div class="rating-options">
