@@ -8,8 +8,8 @@ if (!$dbconnect) {
 
 // Check if form was submitted and tenant session is set
 $feedbackSubmitted = false;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['tenant'])) {
-    $user_id = $_SESSION['tenant']; // Use the tenant's session ID here
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
+    $user_id = $_SESSION['user']; // Use the tenant's session ID here
     $experience = mysqli_real_escape_string($dbconnect, $_POST['experience']);
     $description = mysqli_real_escape_string($dbconnect, $_POST['description']);
 
@@ -36,7 +36,7 @@ mysqli_close($dbconnect);
     <?php if ($feedbackSubmitted): ?>
         <script>
             alert("Thank you for your feedback! We appreciate your input and will use it to improve our services.");
-            window.location.href = "user.php"; // Redirect to user dashboard after feedback submission
+            window.location.href = "owner.php"; // Redirect to user dashboard after feedback submission
         </script>
     <?php endif; ?>
 </body>

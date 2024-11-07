@@ -1,3 +1,58 @@
+<?php
+session_start();
+$dbconnect = mysqli_connect("localhost", "root", "", "rentease");
+
+if (!$dbconnect) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_POST['submit'])) {
+    $fullname = trim($_POST['Fullname']);
+    $phonenumber = trim($_POST['phonenumber']);
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $usertype = $_POST['selectuser'];
+
+    // Set user type and status
+    $type = ($usertype === 'User') ? 0 : 1;
+    $status = "active";
+
+    // Phone number validation (assume a 10-digit phone number)
+    if (!preg_match('/^[0-9]{10}$/', $phonenumber)) {
+        echo "<script>alert('Invalid phone number format. Must be 10 digits.')</script>";
+    }
+    // Email format validation
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Invalid email format.')</script>";
+    }
+    // Check if email already exists
+    elseif (mysqli_num_rows(mysqli_query($dbconnect, "SELECT * FROM user WHERE email='$email'")) > 0) {
+        echo "<script>alert('Email is already registered.')</script>";
+    }
+    // Password strength validation
+    elseif (strlen($password) < 8 || !preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*]/', $password)) {
+        echo "<script>alert('Password must be at least 8 characters long and include at least one letter, one number, and one special character.')</script>";
+    }
+    // Confirm password validation
+    elseif ($password !== $confirm_password) {
+        echo "<script>alert('Passwords do not match!')</script>";
+    }
+    else {
+        // Insert data if all validations pass
+        $query = "INSERT INTO user (name, phno, email, password, status, usertype) VALUES ('$fullname', '$phonenumber', '$email', '$password', '$status', '$usertype')";
+        $query1 = "INSERT INTO login (email, password, user_type) VALUES ('$email', '$password', '$type')";
+
+        if (mysqli_query($dbconnect, $query) && mysqli_query($dbconnect, $query1)) {
+            echo "<script>alert('Registration Successful!'); window.location.href = 'login.php';</script>";
+        } else {
+            echo "<script>alert('Error in registration. Please try again.')</script>";
+        }
+    }
+}
+
+mysqli_close($dbconnect);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -65,46 +120,3 @@
     </div>
   </body>
 </html>
-
-
-<?php
-    $dbconnect=mysqli_connect("localhost","root","","rentease");
-    if(isset($_POST['submit']))
-    {
-      $fullname = $_POST['Fullname'];
-      $phonenumber = $_POST['phonenumber'];
-      $email = $_POST['email'];
-      $password = $_POST['password'];
-      $confirm_password = $_POST['confirm_password'];
-      $usertype = $_POST['selectuser'];
-      if($usertype == 'User'){
-        $type=0;
-        $status="active";
-      }
-      else{
-        $type=1;
-        $status="active";
-      }
-
-      
-      if($password == $confirm_password)
-      {
-        $query = "INSERT INTO user (name, phno, email, password,status,usertype) VALUES ('$fullname', '$phonenumber', '$email', '$password','$status', '$usertype')";
-        $query1 = "INSERT INTO `login`(`email`, `password`, `user_type`) VALUES ('$email', '$password','$type' )";
-        $data= mysqli_query($dbconnect, $query);
-         mysqli_query($dbconnect, $query1);
-         echo "Registration Successful!";  
-         header('Location: login.php');
-      }
-      else
-      {
-        echo "Passwords do not match!";
-      }
-
-      if($data)
-      {
-        echo "<script>alert('data inserted successfully')</script>";
-      }
-     
-    }
-    ?>

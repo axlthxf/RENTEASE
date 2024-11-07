@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 
   <div class="menu">
     <div class="logo">
-      <a href="home.html">
+      <a href="owner.php">
         <img src="./image/renteaseadmin-removebg-preview1.png" alt="" /></a>
       <!-- <hr> -->
     </div>
@@ -380,7 +380,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <button type="submit" name="update-profile">Save Changes</button>
     <button 
     type="button" 
-    onclick="location.href='feedback.php'" 
+    onclick="location.href='ownerfeedback.php'" 
     style="
         background-color: #4CAF50; /* Green background */
         color: white; /* White text */

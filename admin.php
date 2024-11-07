@@ -71,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         </div>
         <div class="options">
   
-          <a href="feedback.html">View Feedback</a>
+          <a href="ViewFeedback.php">View Feedback</a>
         </div>
         <div class="options">
           <a href="home.html">Log out</a>
@@ -120,7 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 //           selectedSection.classList.add('active');
 //       } 
 //   </script> -->
- 
+<?php include 'footer.html'; ?>
   </body>
 </html>
 <!-- <?php

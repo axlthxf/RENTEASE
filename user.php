@@ -185,7 +185,7 @@ if ($result) {
     }
     ?>
 </div>
-
+<?php include 'footer.html'; ?>
 </body>
 </html>
 <?php

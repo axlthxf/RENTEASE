@@ -12,7 +12,7 @@
 <body>
     <div class="header">
         <div class="logo">
-           <a href="user.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
+           <a href="owner.php"> <img src="image/renteaselogo21.png" alt="Rentease Logo"></a>
         </div>
         <div class="feedback-header">
             <h1>Feedback Form</h1>
@@ -28,7 +28,7 @@
                 <h2>Send us your feedback!</h2>
                 <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
             </div>
-            <form action="feedback_success.php" method="POST">
+            <form action="ownerfeedback_success.php" method="POST">
                 <div class="experience-rating">
                     <p>How was your experience?</p>
                     <div class="rating-options">
